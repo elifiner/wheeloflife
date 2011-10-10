@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Wheel of life</title>
+    <script type="text/javascript">
+        function drawCircle(centerx, centery, radius) {
+            ctx.beginPath();
+            ctx.arc(centerx,centery,radius, 0, Math.PI*2, false);
+            ctx.stroke();
+        }
+        function drawWheel(centerx, centery, radius, slices) {
+            var canvas = document.getElementById('tutorial');
+            if (canvas.getContext) {
+                var lastend = 0;
+                ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = "black";
+                slice = Math.PI*2*(1/slices.length);
+                ctx.translate(centerx, centery);
+                ctx.font = "bold 16px sans-serif";
+                var angle = 0;
+
+                ctx.save();
+
+                // draw lines and text
+                for (var i = 0; i < slices.length; i++) {
+                    textWidth = ctx.measureText(slices[i]).width;
+                    ctx.beginPath();
+                    ctx.moveTo(0,0);
+                    ctx.lineTo(radius, 0);
+                    ctx.save();
+                    if (angle > Math.PI*170/180) {
+                        ctx.rotate(slice/2);
+                        ctx.translate(radius+10, -textWidth/2);
+                        ctx.rotate(Math.PI/2);
+                    }
+                    else {
+                        ctx.rotate(slice/2);
+                        ctx.translate(radius+20, textWidth/2);
+                        ctx.rotate(Math.PI*3/2);
+                    }
+                    ctx.fillText(slices[i], 0, 0);
+                    ctx.restore();
+                    ctx.stroke();
+                    ctx.rotate(slice);
+                    angle += slice;
+                }
+
+                ctx.restore();
+                // draw circles
+                ctx.strokeStyle = "lightgray";
+                for (var i = 1; i < 10; i++) {
+                    drawCircle(0, 0, radius*i/10);
+                }
+                ctx.strokeStyle = "black";
+                drawCircle(0, 0, radius);
+
+                // draw numbers
+                ctx.font = "10px sans-serif";
+                for (var i = 1; i < 11; i++) {
+                    ctx.fillText(i, radius*i/10+3, -2);
+                }
+            }
+        }
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+  </head>
+  <body onload="drawWheel(500,500,450,['שכל', 'רגש', 'החלטיות', 'דרך', 'סקרנות', 'עקביות', 'פתיחות', 'מוטיבציה', 'אומץ', 'אמונה', 'תמיכה', 'אהבה עצמית', 'מודעות', 'פרקטיות', 'נסיון חיים', 'להשתחרר מן העבר', 'חוכמה', 'התמדה', 'פעולה', 'אינפורמציה' ]);">
+        <canvas id="tutorial" width="1000" height="1000"></canvas>
+  </body>
+</html>
