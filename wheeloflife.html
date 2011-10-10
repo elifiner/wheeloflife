@@ -5,7 +5,11 @@
     <script type="text/javascript" src="drawing.js"></script>
     <script type="text/javascript">
         function drawWheelFromText(centerx, centery, radius, commaSeparatedSlices) {
-            drawWheel(centerx, centery, radius, commaSeparatedSlices.split(","))
+            slices = commaSeparatedSlices.split(",")
+            for (i = 0; i < slices.length; i++) {
+                slices[i] = slices[i].trim()
+            }
+            drawWheel(centerx, centery, radius, slices);
         }
         function redraw() { 
             drawWheelFromText(500,500,450,document.getElementById('slices').value);
