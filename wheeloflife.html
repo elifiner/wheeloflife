@@ -15,8 +15,22 @@
             drawWheelFromText(500,500,450,document.getElementById('slices').value);
             setTimeout("redraw()", 1000);
         }
+        function onLoad() {
+            redraw();
+            slices = document.getElementById('slices');
+            slices.focus();
+            slices.select();
+        }
+        function setSlices(text) {
+            slices = document.getElementById('slices');
+            slices.value = text;
+            redraw();
+        }
     </script>
     <style type="text/css">
+      body {
+          font-family: "sans-serif"; 
+      }
       canvas { border: 1px solid black; }
       @media print {
           .noprint {
@@ -25,14 +39,18 @@
       }
     </style>
   </head>
-  <body onload="redraw()" dir="rtl">
+  <body onload="onLoad()" dir="rtl" style="width:1000">
       <div class="noprint">
           <h1>גלגל החיים</h1>
-          <p>רשום את שמות הפלחים מופרדים בפסיקים והדפס את גלגל החיים:</p>
+          <p>רשום את שמות הפלחים מופרדים בפסיקים או בחר מהרשימה למטה:</p>
+          <ul>
+              <li><a onclick="setSlices(this.innerHTML)" href="#">כסף, קריירה, חברים, פנאי, בית, זוגיות, משפחה, בריאות, אני</a></li>
+          </ul>
+          <p><i>אפשר להשתמש ברשימה של פסיקים ללא מילים בכדי ליצור גלגל חיים ריק למילוי ידני.</i></p>
           <textarea id="slices" style="width:1000; height:5em; margin-bottom:20; font-size:2em">
-כסף,קריירה,חברים,פנאי,בית,זוגיות,משפחה,בריאות,אני
-          </textarea>
+כסף, קריירה, חברים, פנאי, בית, זוגיות, משפחה, בריאות, אני</textarea>
       </div>
       <canvas id="tutorial" width="1000" height="1000" dir="ltr"></canvas>
+      <p class="noprint"><i>מוגש כשירות לציבור המאמנים האישיים ע"י אלי גולובינסקי, 2011</i></p>
   </body>
 </html>
